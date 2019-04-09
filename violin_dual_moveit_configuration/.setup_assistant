@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: violin_description
+    relative_path: urdf/violin_dual_arm_v1.xacro
+  SRDF:
+    relative_path: config/dual_robot.srdf
+  CONFIG:
+    author_name: Hyeonjun
+    author_email: koreaphj@khu.ac.kr
+    generated_timestamp: 1519108757

@@ -1,0 +1,12 @@
+<launch>
+    <rosparam file="$(find violin_dual_gazebo)/controller/joint_state_controller.yaml" command="load"/>
+
+    <!-- joint_state_controller -->
+    <node name="joint_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" 
+            output="screen" args="joint_state_controller" />
+
+    <!-- Robot state publisher -->        
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" 
+            output="screen"/>
+            
+</launch>

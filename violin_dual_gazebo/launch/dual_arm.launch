@@ -1,0 +1,24 @@
+<launch>
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find violin_dual_gazebo)/worlds/violin_dual_arm.world"/>
+        <arg name="debug" value="$(arg debug)" />
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="headless" value="$(arg headless)"/>
+    </include>
+
+    <param name="robot_description" command="$(find xacro)/xacro.py $(find violin_description)/urdf/violin_dual_arm_v1.xacro" />
+    
+    <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model dual_robot -param robot_description"/>
+
+    <include file="$(find violin_dual_gazebo)/launch/controller_utils.launch"/>
+    <include file="$(find violin_dual_gazebo)/launch/dual_arm_l_controller.launch"/>
+    <include file="$(find violin_dual_gazebo)/launch/dual_arm_r_controller.launch"/>
+</launch>

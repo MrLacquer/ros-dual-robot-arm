@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<robot 
+    xmlns:xacro="http://ros.org/wiki/xacro" name="dual_robot">
+    <xacro:include filename="$(find violin_description)/urdf/l_ur3_joint_limited_robot.urdf.xacro" />
+    <xacro:include filename="$(find violin_description)/urdf/r_ur3_joint_limited_robot.urdf.xacro" />
+    <link name="dual_world"/>
+    <joint name="dual_world" type="fixed">
+        <parent link="dual_world"/>
+        <child link="dual_base_link"/>
+    </joint>
+    <link name="dual_base_link" />
+    <!--the robot model urdf code-->
+    <!--torso of violin robot-->
+    <link name = "torso">
+        <visual>
+            <geometry>
+                <!--box size="0.1 0.1 0.5"/-->
+                <mesh filename = "package://violin_description/meshes/robot_body.stl" />
+            </geometry>
+            <origin xyz = "0 0 0" rpy = "0 0 0"/>
+            <material name="LightGrey">
+                <color rgba="0.7 0.7 0.7 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <!--box size="0.1 0.1 0.5"/-->
+                <mesh filename = "package://violin_description/meshes/robot_body.stl" />
+            </geometry>
+        </collision>
+        
+        <inertial>
+            <!--mass: kg, inertia: using meshlab program -->
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value = "20"/>
+            <inertia ixx="0.5" ixy="0" ixz="0" iyy="0.6" iyz="0" izz="0.3" />
+        </inertial>
+
+    </link>
+    <joint name="dual_base_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="dual_base_link"/>
+        <child link="torso"/>
+    </joint>
+    <!--joint part-->
+    <joint name = "l_robot_body" type = "fixed">
+        <parent link = "torso"/>
+        <child link = "l_world"/>
+        <axis xyz = "0 0 0"/>
+        <origin xyz = "0 0.11 1.26275" rpy = "-1.5708 -1.5708 0"/>
+    </joint>
+    <joint name = "r_robot_body" type = "fixed">
+        <parent link = "torso"/>
+        <child link = "r_world"/>
+        <axis xyz = "0 0 0"/>
+        <origin xyz = "0 -0.11 1.26275" rpy = "-1.5708 1.5708 3.14159"/>
+    </joint>
+</robot>
